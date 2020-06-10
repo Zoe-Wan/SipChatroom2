@@ -40,7 +40,17 @@ public class Listener implements SipMessageListener {
         Listener.username = username;
         Listener.picture = picture;
         this.controller = controller;
-        sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",1111);
+
+        // 随机roll一个用户端口，假如占用了还会再加一（在TextClientWindow里写了）
+        int userPort = ((int)(Math.random()*10))*1000+((int)(Math.random()*10))*100+((int)(Math.random()*10))*10+((int)(Math.random()*10));
+
+        try {
+            sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",userPort);
+        }catch (javax.sip.InvalidArgumentException e){
+            // 端口号被占用，给加个1
+            sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",++userPort);
+        }
+
         sipLayer.addSipMessageListener(this);
         try {
             connect();
