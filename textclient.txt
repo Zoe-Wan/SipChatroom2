@@ -653,3 +653,33 @@ Content-Length: 135
 ]]>
 </message>
 
+<!-- Use the  Trace Viewer in src/tools/tracesviewer to view this  trace  
+Here are the stack configuration properties 
+javax.sip.IP_ADDRESS= 127.0.0.1
+javax.sip.STACK_NAME= TextClient
+javax.sip.ROUTER_PATH= null
+javax.sip.OUTBOUND_PROXY= null
+-->
+<message
+from="127.0.0.1:1111" 
+to="127.0.0.1:8080" 
+time="1591755050104"
+isSender="true" 
+transactionId="textclientv1.0:3283c9b9a5a4051e7edac7fabacae94e@127.0.0.1:1:message:127.0.0.1:1111" 
+callId="3283c9b9a5a4051e7edac7fabacae94e@127.0.0.1" 
+firstLine="MESSAGE sip:server@localhost:8080;transport=udp SIP/2.0" 
+>
+<![CDATA[MESSAGE sip:server@localhost:8080;transport=udp SIP/2.0
+Call-ID: 3283c9b9a5a4051e7edac7fabacae94e@127.0.0.1
+CSeq: 1 MESSAGE
+From: "wzy" <sip:wzy@127.0.0.1:1111>;tag=textclientv1.0
+To: "server" <sip:server@localhost:8080>
+Via: SIP/2.0/UDP 127.0.0.1:1111;branch=branch1
+Max-Forwards: 70
+Contact: "wzy" <sip:wzy@127.0.0.1:1111>
+Content-Type: text/plain
+Content-Length: 135
+
+]]>
+</message>
+
