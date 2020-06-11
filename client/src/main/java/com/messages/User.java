@@ -1,5 +1,7 @@
 package com.messages;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 
 /**
@@ -35,4 +37,10 @@ public class User implements Serializable {
 
     String picture;
     Status status;
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
 }

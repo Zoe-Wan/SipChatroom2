@@ -3,6 +3,7 @@ package com.client.login;
 import com.client.chatwindow.ChatController;
 import com.client.chatwindow.Listener;
 import com.client.util.ResizeHelper;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -36,17 +37,18 @@ import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
 
 /**
- *  Created by Dominic on 12-Nov-15.
+ *  Created by wzy & csx
  */
 public class LoginController implements Initializable {
-    @FXML private ImageView Defaultview;
-    @FXML private ImageView Sarahview;
-    @FXML private ImageView Dominicview;
+    //    @FXML private ImageView Defaultview;
+//    @FXML private ImageView Sarahview;
+//    @FXML private ImageView Dominicview;
     @FXML public  TextField hostnameTextfield;
     @FXML private TextField portTextfield;
-    @FXML private TextField usernameTextfield;
-    @FXML private ChoiceBox imagePicker;
-    @FXML private Label selectedPicture;
+    @FXML private TextField userName;
+
+    //    @FXML private ChoiceBox imagePicker;
+//    @FXML private Label selectedPicture;
     public static ChatController con;
     @FXML private BorderPane borderPane;
     private double xOffset;
@@ -63,17 +65,42 @@ public class LoginController implements Initializable {
     public static LoginController getInstance() {
         return instance;
     }
-    public void loginButtonAction() throws IOException, InvalidArgumentException, TransportNotSupportedException, TooManyListenersException, PeerUnavailableException, ObjectInUseException {
+    public void loginButtonAction() throws IOException, InvalidArgumentException, TransportNotSupportedException, TooManyListenersException, PeerUnavailableException, ObjectInUseException {//        String hostname = hostnameTextfield.getText();
+//        int port = Integer.parseInt(portTextfield.getText());
+//        String username = usernameTextfield.getText();
+
+
+
+        // 主机名获取,不过没啥用，写死了已经
         String hostname = hostnameTextfield.getText();
-        int port = Integer.parseInt(portTextfield.getText());
-        String username = usernameTextfield.getText();
-        String picture = selectedPicture.getText();
+        if (hostname.equals("")){
+            hostname = "127.0.0.1";
+        }
+
+        //端口号获取，也没啥用，写死了已经
+        String portStr = portTextfield.getText();
+        int port;
+        if (portStr.equals("")){
+            port = 8080;
+        }
+        else{
+            port = Integer.parseInt(portStr);
+        }
+
+        //用户名获取
+        String username = userName.getText();
+
+        //图片默认为默认
+        String picture = "Default";
+
+
 
         FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/ChatView.fxml"));
         Parent window = (Pane) fmxlLoader.load();
         con = fmxlLoader.<ChatController>getController();
+
         if (listener == null)
-        listener = new Listener(hostname, port, username, picture, con);
+            listener = new Listener(hostname, port, username, picture, con);
 //        Thread x = new Thread(listener);
 //        x.start();
         this.scene = new Scene(window);
@@ -95,16 +122,17 @@ public class LoginController implements Initializable {
             stage.setMinHeight(300);
             ResizeHelper.addResizeListener(stage);
             stage.centerOnScreen();
-            con.setUsernameLabel(usernameTextfield.getText());
-            con.setImageLabel(selectedPicture.getText());
+            con.setUsernameLabel(userName.getText());
+            // 这里也要改图片，别忘记了
+            con.setImageLabel("Default");
         });
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imagePicker.getSelectionModel().selectFirst();
-        selectedPicture.textProperty().bind(imagePicker.getSelectionModel().selectedItemProperty());
-        selectedPicture.setVisible(false);
+//        imagePicker.getSelectionModel().selectFirst();
+//        selectedPicture.textProperty().bind(imagePicker.getSelectionModel().selectedItemProperty());
+//        selectedPicture.setVisible(false);
 
         /* Drag and Drop */
         borderPane.setOnMousePressed(event -> {
@@ -123,37 +151,38 @@ public class LoginController implements Initializable {
             borderPane.setCursor(Cursor.DEFAULT);
         });
 
-        imagePicker.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> selected, String oldPicture, String newPicture) {
-                if (oldPicture != null) {
-                    switch (oldPicture) {
-                        case "Default":
-                            Defaultview.setVisible(false);
-                            break;
-                        case "Dominic":
-                            Dominicview.setVisible(false);
-                            break;
-                        case "Sarah":
-                            Sarahview.setVisible(false);
-                            break;
-                    }
-                }
-                if (newPicture != null) {
-                    switch (newPicture) {
-                        case "Default":
-                            Defaultview.setVisible(true);
-                            break;
-                        case "Dominic":
-                            Dominicview.setVisible(true);
-                            break;
-                        case "Sarah":
-                            Sarahview.setVisible(true);
-                            break;
-                    }
-                }
-            }
-        });
+//        imagePicker.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> selected, String oldPicture, String newPicture) {
+//                if (oldPicture != null) {
+//                    switch (oldPicture) {
+//                        case "Default":
+//                            Defaultview.setVisible(false);
+//                            break;
+//                        case "Dominic":
+//                            Dominicview.setVisible(false);
+//                            break;
+//                        case "Sarah":
+//                            Sarahview.setVisible(false);
+//                            break;
+//                    }
+//                }
+//                if (newPicture != null) {
+//                    switch (newPicture) {
+//                        case "Default":
+//                            Defaultview.setVisible(true);
+//                            break;
+//                        case "Dominic":
+//                            Dominicview.setVisible(true);
+//                            break;
+//                        case "Sarah":
+//                            Sarahview.setVisible(true);
+//                            break;
+//                    }
+//                }
+//            }
+//        });
+
         int numberOfSquares = 30;
         while (numberOfSquares > 0){
             generateAnimation();

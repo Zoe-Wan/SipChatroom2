@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<BorderPane fx:id="borderPane" maxWidth="350.0" minWidth="350.0" prefHeight="420.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.login.LoginController">
-   <right>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.login.LoginController">
+   <top>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="103.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="210.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="103.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="27.600001907348634" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="325.0" minWidth="0.0" prefWidth="121.19999809265138" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="384.000015258789" minWidth="0.0" prefWidth="128.20000000000002" />
+            <ColumnConstraints maxWidth="191.40000000000003" minWidth="6.0" prefWidth="137.2" />
+            <ColumnConstraints maxWidth="153.0" minWidth="10.0" prefWidth="127.40000000000003" />
+
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="126.0" minHeight="12.0" prefHeight="35.0" />
-            <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="36.0" valignment="CENTER" />
-            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="47.0" />
-            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="28.0" />
-            <RowConstraints maxHeight="110.0" minHeight="9.0" prefHeight="11.0" />
+            <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="90.59999237060546" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="65.8" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="52.599999999999994" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="126.0" minHeight="12.0" prefHeight="44.0" />
+            <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="42.19999999999999" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="74.39999999999998" valignment="CENTER" />
          </rowConstraints>
          <children>
-            <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonAction" stylesheets="@../styles/Login.css" text="Connect" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Hostname: " textAlignment="CENTER" textFill="#f89406" GridPane.rowIndex="5" />
-            <TextField fx:id="hostnameTextfield" prefWidth="188.0" text="localhost" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label text="Port: " textFill="#f89406" GridPane.rowIndex="6" />
-            <TextField fx:id="portTextfield" prefHeight="13.0" prefWidth="149.0" text="9001" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Username: " textFill="#f89406" GridPane.rowIndex="3" />
-            <TextField fx:id="usernameTextfield" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label prefHeight="22.0" prefWidth="73.0" text="Server Details" textFill="#f89406" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="用户名: " textFill="#0e25bfc9" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font></Label>
+
+            <Label text="密码:" textFill="#3e301b" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font></Label>
+            <Label text="主机: " textAlignment="CENTER" textFill="#83059f" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Microsoft YaHei Light" size="16.0" />
+               </font></Label>
+            <TextField fx:id="hostnameTextfield" prefWidth="188.0" promptText="默认为localhost" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="端口号: " textFill="#83059f" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font></Label>
+            <TextField fx:id="portTextfield" prefHeight="13.0" prefWidth="149.0" promptText="默认为8080" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="120.0" text="主机设置" textAlignment="CENTER" textFill="#9ae25f" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font></Label>
+            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
                <children>
                   <ImageView fx:id="Defaultview" fitHeight="93" fitWidth="93" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -56,38 +70,41 @@
                   </ImageView>
                </children>
             </StackPane>
-            <ChoiceBox fx:id="imagePicker" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Default" />
-                     <String fx:value="Dominic" />
-                     <String fx:value="Sarah" />
-                  </FXCollections>
-               </items>
-                    </ChoiceBox>
-            <Label fx:id="selectedPicture" text="Label" GridPane.rowIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+            <Label fx:id="selectedPicture" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonAction" stylesheets="@../styles/Login.css" text="LOG IN!" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Microsoft YaHei" size="16.0" />
+               </font></Button>
+            <HBox prefHeight="10.0" prefWidth="63.0" GridPane.columnIndex="4">
                <children>
                   <Button id="MinimizedBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="24.0" maxWidth="68.0" minWidth="45.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="24.0" prefWidth="45.0" stylesheets="@../styles/Login.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
                   </Button>
-                  <Button id="CloseBtn" fx:id="closeButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="24.0" maxWidth="68.0" minWidth="45.0" mnemonicParsing="false" onAction="#closeSystem" prefHeight="24.0" prefWidth="45.0" stylesheets="@../styles/Login.css">
+                  <Button id="CloseBtn" fx:id="closeButton" alignment="CENTER_RIGHT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="24.0" maxWidth="68.0" minWidth="45.0" mnemonicParsing="false" onAction="#closeSystem" prefHeight="24.0" prefWidth="45.0" stylesheets="@../styles/Login.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></Button>
                </children>
                <GridPane.margin>
                   <Insets right="10.0" top="10.0" />
                </GridPane.margin>
             </HBox>
-            <Label text="JavaFX Version 0.3" textFill="#f89406" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <TextField fx:id="userName" text="yxx" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <PasswordField text="123" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="记住密码" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
-                  <Font size="10.0" />
+                  <Font size="15.0" />
                </font>
-            </Label>
+            </CheckBox>
          </children>
       </GridPane>
-   </right>
+   </top>
 </BorderPane>

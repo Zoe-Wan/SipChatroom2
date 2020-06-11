@@ -1,5 +1,7 @@
 package com.messages;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ public class Message implements Serializable {
     private MessageType type;
     private String msg;
     private int count;
-    private ArrayList<User> list;
+    private HashMap<String, User> list;
     private ArrayList<User> users;
 
     private Status status;
@@ -54,12 +56,12 @@ public class Message implements Serializable {
         this.type = type;
     }
 
-    public ArrayList<User> getUserlist() {
+    public HashMap<String, User> getUserlist() {
         return list;
     }
 
     public void setUserlist(HashMap<String, User> userList) {
-        this.list = new ArrayList<>(userList.values());
+        this.list = userList;
     }
 
     public void setOnlineCount(int count){
@@ -93,5 +95,12 @@ public class Message implements Serializable {
 
     public void setVoiceMsg(byte[] voiceMsg) {
         this.voiceMsg = voiceMsg;
+    }
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+    public static Message JsonToMessage(String Json){
+        return JSON.parseObject(Json,Message.class);
     }
 }
