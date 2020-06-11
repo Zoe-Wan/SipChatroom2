@@ -11,21 +11,20 @@ import org.slf4j.LoggerFactory;
 
 import javax.sip.*;
 import java.io.*;
-//import java.net.Socket;
+import java.net.Socket;
 import java.text.ParseException;
 import java.util.TooManyListenersException;
 
 import static com.messages.MessageType.CONNECTED;
-import static com.messages.MessageType.DISCONNECTED;
 
 public class Listener implements SipMessageListener {
 
     private static final String HASCONNECTED = "has connected";
 
     private static String picture;
-//    private Socket socket;
-    public String serverIP;
-    public int serverPort;
+    private Socket socket;
+    public String hostname;
+    public int port;
     public static String username;
     public ChatController controller;
     public static SipLayerFacade sipLayer;
@@ -36,23 +35,13 @@ public class Listener implements SipMessageListener {
     Logger logger = LoggerFactory.getLogger(Listener.class);
 
     public Listener(String hostname, int port, String username, String picture, ChatController controller) throws InvalidArgumentException, TransportNotSupportedException, TooManyListenersException, PeerUnavailableException, ObjectInUseException {
-        this.serverIP = hostname;
-        this.serverPort = port;
+        this.hostname = hostname;
+        this.port = port;
         Listener.username = username;
         Listener.picture = picture;
         this.controller = controller;
-//        sipLayer = new SipLayerFacade("SERVER@"+hostname+":"+port,username,"127.0.0.1",1111);
-        int userPort = ((int)(Math.random()*10))*1000+((int)(Math.random()*10))*100+((int)(Math.random()*10))*10+((int)(Math.random()*10));
-
-        try {
-            sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",userPort);
-        }catch (javax.sip.InvalidArgumentException e){
-            // 端口号被占用，给加个1
-            e.printStackTrace();
-            sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",++userPort);
-        }
+        sipLayer = new SipLayerFacade("server@"+hostname+":"+port,username,"127.0.0.1",1111);
         sipLayer.addSipMessageListener(this);
-
         try {
             connect();
         }  catch (ParseException e) {
@@ -61,7 +50,9 @@ public class Listener implements SipMessageListener {
             e.printStackTrace();
         }
     }
-//    public void run() {
+
+
+    public void run() {
 //        try {
 //            socket = new Socket(hostname, port);
 //            LoginController.getInstance().showScene();
@@ -75,7 +66,7 @@ public class Listener implements SipMessageListener {
 //            LoginController.getInstance().showErrorDialog("Could not connect to server");
 //            logger.error("Could not Connect");
 //        }
-//        logger.info("Connection accepted " + socket.getInetAddress() + ":" + socket.getPort());
+        logger.info("Connection accepted " + socket.getInetAddress() + ":" + socket.getPort());
 
 //        try {
 //            connect();
@@ -115,7 +106,7 @@ public class Listener implements SipMessageListener {
 //            e.printStackTrace();
 //            controller.logoutScene();
 //        }
-//    }
+    }
 
     /* This method is used for sending a normal Message
      * @param msg - The message which the user generates
@@ -128,13 +119,6 @@ public class Listener implements SipMessageListener {
         createMessage.setStatus(Status.AWAY);
         createMessage.setMsg(msg);
         createMessage.setPicture(picture);
-        sipLayer.sendMessage(createMessage);
-    }
-
-    public static void close() throws ParseException, SipException, InvalidArgumentException {
-        Message createMessage = new Message();
-        createMessage.setName(username);
-        createMessage.setType(DISCONNECTED);
         sipLayer.sendMessage(createMessage);
     }
 
@@ -194,13 +178,13 @@ public class Listener implements SipMessageListener {
                     controller.addAsServer(message);
                     break;
                 case CONNECTED:
+                    controller.setUserList(message);
                     try {
                         LoginController.getInstance().showScene();
                     }catch (IOException e) {
                         LoginController.getInstance().showErrorDialog("Could not connect to server");
                         logger.error("Could not Connect");
                     }
-                    controller.setUserList(message);
                     break;
                 case DISCONNECTED:
                     controller.setUserList(message);
