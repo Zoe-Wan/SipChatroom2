@@ -220,7 +220,7 @@ public class ChatController implements Initializable {
 
     @FXML
     public void closeApplication() throws ParseException, InvalidArgumentException, SipException {
-        Listener.close();
+//        Listener.close();
         Platform.exit();
         System.exit(0);
     }
