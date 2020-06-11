@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.util.TooManyListenersException;
 
 import static com.messages.MessageType.CONNECTED;
+import static com.messages.MessageType.DISCONNECTED;
 
 public class Listener implements SipMessageListener {
 
@@ -127,6 +128,13 @@ public class Listener implements SipMessageListener {
         createMessage.setStatus(Status.AWAY);
         createMessage.setMsg(msg);
         createMessage.setPicture(picture);
+        sipLayer.sendMessage(createMessage);
+    }
+
+    public static void close() throws ParseException, SipException, InvalidArgumentException {
+        Message createMessage = new Message();
+        createMessage.setName(username);
+        createMessage.setType(DISCONNECTED);
         sipLayer.sendMessage(createMessage);
     }
 

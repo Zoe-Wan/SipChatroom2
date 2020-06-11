@@ -25,10 +25,11 @@ public class Server implements SipMessageListener {
 
     /* Setting up variables */
     private static final int PORT = 8080;
-//    HashMap反查
+//    HashMap实现name（用户名）对User（用户）的反查
     private static final HashMap<String, User> names = new HashMap<>();
     // writers 用于管理对每个客户端的写入流，虽然写入流在sip中没有必要，但是这个也是对在线用户的管理，所以在删除writers需要用另一个东西来完成这个功能
 //    private static HashSet<ObjectOutputStream> writers = new HashSet<>();
+    // sipClients 用于代替writers的功能，保存在线用户
     private static HashSet<String> sipClients = new HashSet<>();
     private static ArrayList<User> users = new ArrayList<>();
     static Logger logger = LoggerFactory.getLogger(Server.class);
@@ -88,7 +89,7 @@ public class Server implements SipMessageListener {
                     sendNotification(message);
                     break;
                 case DISCONNECTED:
-                    removeFromList();
+                    closeConnections(getSipAddress(sender));
                     break;
                 case STATUS:
                     changeStatus(message);
@@ -346,24 +347,23 @@ public class Server implements SipMessageListener {
          * Once a user has been disconnected, we close the open connections and remove the writers
          * 资源回收，sip里应该是没有这里的
          */
-//        private synchronized void closeConnections()  {
-//            logger.debug("closeConnections() method Enter");
-//            logger.info("HashMap names:" + names.size() + " clientSet:" + clientSet.size() + " usersList size:" + users.size());
-//            if (name != null) {
-//                names.remove(name);
-//                logger.info("User: " + name + " has been removed!");
-//            }
-//            if (user != null){
-//                users.remove(user);
-//                logger.info("User object: " + user + " has been removed!");
-//            }
-//            try {
-//                removeFromList();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            logger.info("HashMap names:" + names.size() + " clientSet:" + clientSet.size() + " usersList size:" + users.size());
-//            logger.debug("closeConnections() method Exit");
-//        }
+        private void closeConnections(String from)  {
+            logger.debug("closeConnections() method Enter");
+            logger.info("HashMap names:" + names.size() + " past clients:" + sipClients.size() + " usersList size:" + users.size());
+            String name = from.substring(0,from.indexOf('@'));
+            if (name != null) {
+                users.remove(names.get(name));
+                names.remove(name);
+                sipClients.remove(from);
+                logger.info("User: " + name + " has been removed!");
+            }
+            try {
+                removeFromList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            logger.info("HashMap names:" + names.size() + " current clientSet:" + sipClients.size() + " usersList size:" + users.size());
+            logger.debug("closeConnections() method Exit");
+        }
 //    }
 }
